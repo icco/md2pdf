@@ -1,6 +1,6 @@
 #! /usr/bin/ruby
 
-require 'rdiscount'
+require 'redcarpet'
 require 'htmldoc'
 
 if ARGV.length != 2
@@ -34,8 +34,11 @@ pdf.set_option :left, '2cm'
 pdf.set_option :right, '2cm'
 
 pdf.header ".t."
-md = RDiscount.new(File.read(infile), :smart)
-pdf << md.to_html
+renderer = Redcarpet::Render::HTML.new(no_links: true, hard_wrap: true)
+markdown = Redcarpet::Markdown.new(renderer, extensions = {})
+md = markdown.render(File.read(infile))
+
+pdf << md
 
 pdf.footer ".1."
 
