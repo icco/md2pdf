@@ -18,6 +18,11 @@ if !File.exists? infile
    exit 2
 end
 
+if !File.exists? outfile
+   puts "#{outfile} does not exist."
+   exit 2
+end
+
 pdf = PDF::HTMLDoc.new
 pdf.set_option :outfile, outfile
 pdf.set_option :bodycolor, :white
